@@ -3,46 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صدى الطفولة | عهد الأصدقاء</title>
+    <title>صدى الطفولة | مغامرات سنان</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;900&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #00d2ff; --accent: #ff9800; --bg: #0b0f19; --card: #161e2e; }
-        * { user-select: none; }
+        * { user-select: none; box-sizing: border-box; }
         body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; position: relative; }
-        header { width: 100%; background: linear-gradient(135deg, #00d2ff, #3a7bd5); padding: 40px 0; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .banner-top, .banner-bottom { width: 100%; text-align: center; background: #0a0e15; padding: 20px 0; margin: 0 auto; display: flex; justify-content: center; align-items: center; border-radius: 12px; overflow-x: auto; }
-        .banner-top { max-width: 900px; margin-top: 20px; margin-bottom: 10px; }
-        .banner-bottom { max-width: 900px; margin-top: 30px; margin-bottom: 20px; }
+        
+        /* تصغير الهيدر العلوي */
+        header { width: 100%; background: linear-gradient(135deg, #00d2ff, #3a7bd5); padding: 10px 0; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        header h1 { font-size: 1.3rem; margin: 0; }
+        header p { font-size: 0.8rem; margin: 3px 0 0 0; opacity: 0.9; }
+
+        /* تصغير مساحات البنرات والتقليل من حجمها البصري */
+        .banner-top, .banner-bottom { width: 100%; text-align: center; background: #0a0e15; padding: 10px 0; margin: 0 auto; display: flex; justify-content: center; align-items: center; border-radius: 8px; overflow-x: auto; }
+        .banner-top { max-width: 900px; margin-top: 10px; margin-bottom: 5px; }
+        .banner-bottom { max-width: 900px; margin-top: 20px; margin-bottom: 10px; }
+        
         .main-container { max-width: 900px; width: 95%; margin: 0 auto; text-align: center; }
+        
+        .back-home-btn { background: #252f44; color: white; border: none; padding: 6px 15px; border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: bold; cursor: pointer; margin: 10px 0; transition: 0.3s; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; }
+        .back-home-btn:hover { background: var(--primary); color: #000; }
+
         .video-wrapper-outer { position: relative; z-index: 1; }
-        .video-display-area { background: #000; border-radius: 20px; overflow: hidden; border: 3px solid var(--primary); box-shadow: 0 0 30px rgba(0, 210, 255, 0.2); margin-bottom: 30px; display: none; position: relative; }
+        .video-display-area { background: #000; border-radius: 15px; overflow: hidden; border: 2px solid var(--primary); box-shadow: 0 0 20px rgba(0, 210, 255, 0.2); margin-bottom: 15px; display: none; position: relative; }
         .responsive-iframe { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; overflow: hidden; }
-        .responsive-iframe iframe { position: absolute; top: -160px; left: 0; width: 100%; height: calc(100% + 160px); border: 0; overflow: hidden; pointer-events: auto; }
-        .episodes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 15px; background: var(--card); padding: 25px; border-radius: 20px; max-height: 600px; overflow-y: auto; }
-        .ep-btn { background: #252f44; color: white; border: 2px solid transparent; padding: 15px 0; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .ep-btn:hover { background: var(--primary); transform: scale(1.1); border-color: white; }
-        .ep-btn.active { background: var(--accent); color: black; box-shadow: 0 0 15px var(--accent); }
-        .info-text { margin-top: 20px; color: var(--primary); }
-        footer { margin-top: 50px; padding: 20px; opacity: 0.4; text-align: center; }
-        @media (max-width: 600px) { .episodes-grid { grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 10px; padding: 15px; } .ep-btn { padding: 10px 0; font-size: 1rem; } }
+        .responsive-iframe iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; overflow: hidden; pointer-events: auto; }
+        
+        .episodes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 10px; background: var(--card); padding: 15px; border-radius: 15px; }
+        .ep-btn { background: #252f44; color: white; border: 2px solid transparent; padding: 12px 0; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-family: 'Cairo', sans-serif; }
+        .ep-btn:hover { background: var(--primary); transform: scale(1.05); border-color: white; color: #000; }
+        .ep-btn.active { background: var(--accent); color: black; box-shadow: 0 0 10px var(--accent); }
+        
+        .intro-btn { grid-column: span 2; font-size: 0.9rem !important; background: #3a7bd5 !important; }
+
+        .section-title { font-size: 0.95rem; margin: 10px 0; color: var(--primary); }
+        .info-text { margin-top: 10px; font-size: 0.85rem; color: var(--primary); }
+        footer { margin-top: 20px; padding: 10px; font-size: 0.8rem; opacity: 0.4; text-align: center; }
+
+        @media (max-width: 600px) { 
+            .episodes-grid { grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); gap: 8px; padding: 10px; } 
+            .ep-btn { padding: 10px 0; font-size: 1rem; } 
+            .intro-btn { grid-column: span 3; } 
+        }
     </style>
 </head>
 <body>
-<header><h1>🎬 صدى الطفولة</h1><p>اختر رقم الحلقة وابدأ المشاهدة فوراً (33 حلقة)</p></header>
-<div class="banner-top"><script> atOptions = { 'key' : 'b8ba5b25ff25e41ea44c2df3a1b05378', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script><script src="https://www.highperformanceformat.com/b8ba5b25ff25e41ea44c2df3a1b05378/invoke.js"></script></div>
-<div class="main-container"><div class="video-wrapper-outer"><div id="videoPlayer" class="video-display-area"><div class="responsive-iframe"><iframe id="mainIframe" src="" allowfullscreen scrolling="no"></iframe></div><div id="episodeTitle" style="padding: 10px; background: var(--card); font-weight: bold;"></div></div></div><h2>اضغط على رقم الحلقة للمشاهدة:</h2><div class="episodes-grid" id="buttonsGrid"></div><p class="info-text">جميع حلقات عهد الأصدقاء (33 حلقة) متوفرة الآن بجودة عالية</p></div>
-<div class="banner-bottom"><script> atOptions = { 'key' : 'b8ba5b25ff25e41ea44c2df3a1b05378', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script><script src="https://www.highperformanceformat.com/b8ba5b25ff25e41ea44c2df3a1b05378/invoke.js"></script></div>
+
+<header>
+    <h1>مغامرات سنان</h1>
+    <p>اختر رقم الحلقة وابدأ المشاهدة</p>
+</header>
+
+<!-- إعلان البنر العلوي (مصغر) -->
+<div class="banner-top">
+    <script> atOptions = { 'key' : 'b8ba5b25ff25e41ea44c2df3a1b05378', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} }; </script>
+    <script src="https://www.highperformanceformat.com/b8ba5b25ff25e41ea44c2df3a1b05378/invoke.js"></script>
+</div>
+
+<div class="main-container">
+    <a href="https://husamalu637.github.io/Sasuke/" class="back-home-btn">⬅ الرئيسية</a>
+
+    <div class="video-wrapper-outer">
+        <div id="videoPlayer" class="video-display-area">
+            <div class="responsive-iframe"><iframe id="mainIframe" src="" allowfullscreen allow="autoplay; encrypted-media" scrolling="no"></iframe></div>
+            <div id="episodeTitle" style="padding: 8px; background: var(--card); font-size: 0.9rem; font-weight: bold;"></div>
+        </div>
+    </div>
+
+    <div class="section-title">اختر رقم الحلقة للمشاهدة:</div>
+    <div class="episodes-grid" id="buttonsGrid"></div>
+    <p class="info-text">جميع الحلقات تعمل بكفاءة عالية</p>
+</div>
+
+<!-- إعلان البنر السفلي -->
+<div class="banner-bottom">
+    <script> atOptions = { 'key' : 'b8ba5b25ff25e41ea44c2df3a1b05378', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} }; </script>
+    <script src="https://www.highperformanceformat.com/b8ba5b25ff25e41ea44c2df3a1b05378/invoke.js"></script>
+</div>
+
 <footer>جميع الحقوق محفوظة - صدى الطفولة &copy; 2026</footer>
+
 <script>
-    const adLink = "https://www.profitablecpmratenetwork.com/e41dj2h87?key=bef514b5ca3fa945e7a3b60e4a9ef21a";
-    const totalEpisodes = 33;
-    const episodeLinks = [];
-    for (let i = 0; i < totalEpisodes; i++) { episodeLinks.push(`https://cartoony.net/watch/321/${4576 + i}`); }
-    const grid = document.getElementById('buttonsGrid'); const player = document.getElementById('videoPlayer'); const iframe = document.getElementById('mainIframe'); const titleDisp = document.getElementById('episodeTitle');
+    const popupAdLink = "https://www.profitablecpmratenetwork.com/e41dj2h87?key=bef514b5ca3fa945e7a3b60e4a9ef21a";
+
+    const episodesData = [
+        { title: "الحلقة 1", url: "https://www.youtube.com/embed/TRyJfGDQs8E", type: "ep", num: 1 },
+        { title: "الحلقة 2", url: "https://www.youtube.com/embed/C1h62oXxVI0", type: "ep", num: 2 },
+        { title: "الحلقة 3", url: "https://www.youtube.com/embed/bBopV2lawZc", type: "ep", num: 3 },
+        { title: "الحلقة 4", url: "https://www.youtube.com/embed/d2ZjK2Gzbjs", type: "ep", num: 4 },
+        { title: "الحلقة 5", url: "https://www.youtube.com/embed/j-3Azt46uoA", type: "ep", num: 5 },
+        { title: "الحلقة 6", url: "https://www.youtube.com/embed/2JvHRtLYrsU", type: "ep", num: 6 },
+        { title: "الحلقة 7", url: "https://www.youtube.com/embed/uTjz1XpKOn0", type: "ep", num: 7 },
+        { title: "الحلقة 8", url: "https://www.youtube.com/embed/DbX_Z1cCsWc", type: "ep", num: 8 },
+        { title: "الحلقة 9", url: "https://www.youtube.com/embed/BLyoxuLNnm0", type: "ep", num: 9 },
+        { title: "الحلقة 10", url: "https://www.youtube.com/embed/hcJG-CcNqHs", type: "ep", num: 10 },
+        { title: "الحلقة 11", url: "https://www.youtube.com/embed/FaKyhOsxkHU", type: "ep", num: 11 },
+        { title: "الحلقة 12", url: "https://www.youtube.com/embed/ZA-G5ljWZ0M", type: "ep", num: 12 },
+        { title: "الحلقة 13", url: "https://www.youtube.com/embed/i1Hc8Iua_RI", type: "ep", num: 13 },
+        { title: "الحلقة 14", url: "https://www.youtube.com/embed/aEFP1ATFzMg", type: "ep", num: 14 },
+        { title: "الحلقة 15", url: "https://www.youtube.com/embed/Y5xHYJR4ggw", type: "ep", num: 15 },
+        { title: "الحلقة 16", url: "https://www.youtube.com/embed/yjEHgWU1Q4A", type: "ep", num: 16 },
+        { title: "الحلقة 17", url: "https://www.youtube.com/embed/D2sCGQchVxc", type: "ep", num: 17 },
+        { title: "الحلقة 18", url: "https://www.youtube.com/embed/voxu0hmqhjc", type: "ep", num: 18 },
+        { title: "الحلقة 19", url: "https://www.youtube.com/embed/g__E_6jEn6M", type: "ep", num: 19 },
+        { title: "الحلقة 20", url: "https://www.youtube.com/embed/3kBYyl44W4s", type: "ep", num: 20 },
+        { title: "الحلقة 21", url: "https://www.youtube.com/embed/J1lDnGQYf8E", type: "ep", num: 21 },
+        { title: "الحلقة 22", url: "https://www.youtube.com/embed/Fd6HnqPLXA0", type: "ep", num: 22 },
+        { title: "الحلقة 23", url: "https://www.youtube.com/embed/945h23XPllg", type: "ep", num: 23 },
+        { title: "الحلقة 24", url: "https://www.youtube.com/embed/miF54M8QNLU", type: "ep", num: 24 },
+        { title: "الحلقة 25", url: "https://www.youtube.com/embed/6FOIkg7d6k4", type: "ep", num: 25 },
+        { title: "الحلقة 26", url: "https://www.youtube.com/embed/OBOLGwfEw3c", type: "ep", num: 26 },
+        { title: "الحلقة 27", url: "https://www.youtube.com/embed/sKck6yVKT68", type: "ep", num: 27 },
+        { title: "الحلقة 28", url: "https://www.youtube.com/embed/Wjpj3_tyjio", type: "ep", num: 28 },
+        { title: "الحلقة 29", url: "https://www.youtube.com/embed/gXGbN6jN0qg", type: "ep", num: 29 },
+        { title: "الحلقة 30", url: "https://www.youtube.com/embed/-ZCogsTh0ik", type: "ep", num: 30 },
+        { title: "الحلقة 31", url: "https://www.youtube.com/embed/AjCFHuouNas", type: "ep", num: 31 },
+        { title: "الحلقة 32", url: "https://www.youtube.com/embed/PJyyFdINTIQ", type: "ep", num: 32 },
+        { title: "الحلقة 33", url: "https://www.youtube.com/embed/Mzyj4RMNPxc", type: "ep", num: 33 },
+        { title: "الحلقة 34", url: "https://www.youtube.com/embed/Yh0p200QVjo", type: "ep", num: 34 },
+        { title: "الحلقة 35", url: "https://www.youtube.com/embed/cC7RCNbMoBQ", type: "ep", num: 35 },
+        { title: "الحلقة 36", url: "https://www.youtube.com/embed/k2XrYVJqTXk", type: "ep", num: 36 },
+        { title: "الحلقة 37", url: "https://www.youtube.com/embed/E1PKFQPhGW4", type: "ep", num: 37 },
+        { title: "الحلقة 38", url: "https://www.youtube.com/embed/K8RDyH72ToY", type: "ep", num: 38 },
+        { title: "الحلقة 39", url: "https://www.youtube.com/embed/-KVPL6sO_ZE", type: "ep", num: 39 },
+        { title: "الحلقة 40", url: "https://www.youtube.com/embed/01ZwmaAM7z8", type: "ep", num: 40 },
+        { title: "الحلقة 41", url: "https://www.youtube.com/embed/tWuiFldM-hs", type: "ep", num: 41 },
+        { title: "الحلقة 42", url: "https://www.youtube.com/embed/I9CFqeGycMs", type: "ep", num: 42 },
+        { title: "الحلقة 43", url: "https://www.youtube.com/embed/rkBsr8VS6dM", type: "ep", num: 43 },
+        { title: "الحلقة 44", url: "https://www.youtube.com/embed/1ZRpjzp7dRI", type: "ep", num: 44 },
+        { title: "الحلقة 45", url: "https://www.youtube.com/embed/FmSGSV6U9Fc", type: "ep", num: 45 },
+        { title: "الحلقة 46", url: "https://www.youtube.com/embed/Y0Y1kBCLuwA", type: "ep", num: 46 },
+        { title: "الحلقة 47", url: "https://www.youtube.com/embed/tSDvgJBW5FM", type: "ep", num: 47 },
+        { title: "الحلقة 48", url: "https://www.youtube.com/embed/yOfyItJSAzU", type: "ep", num: 48 },
+        { title: "الحلقة 49", url: "https://www.youtube.com/embed/SqN6oopCj0g", type: "ep", num: 49 },
+        { title: "الحلقة 50", url: "https://www.youtube.com/embed/6uGiALzjdKM", type: "ep", num: 50 },
+        { title: "الحلقة 51", url: "https://www.youtube.com/embed/fK4hgWqYe2A", type: "ep", num: 51 },
+        { title: "الحلقة 52", url: "https://www.youtube.com/embed/apZzfAoc7PA", type: "ep", num: 52 },
+        { title: "الحلقة 53", url: "https://www.youtube.com/embed/-bZrUlriJPs", type: "ep", num: 53 },
+        { title: "الحلقة 54", url: "https://www.youtube.com/embed/eYIFwTvCNE4", type: "ep", num: 54 },
+        { title: "الحلقة 55", url: "https://www.youtube.com/embed/QZhq4jxLKo8", type: "ep", num: 55 },
+        { title: "الحلقة 56", url: "https://www.youtube.com/embed/jE8Q8repX3c", type: "ep", num: 56 },
+        { title: "الحلقة 57", url: "https://www.youtube.com/embed/VUBhHOptAws", type: "ep", num: 57 },
+        { title: "الحلقة 58", url: "https://www.youtube.com/embed/2nd8qyTpuwg", type: "ep", num: 58 },
+        { title: "الحلقة 59", url: "https://www.youtube.com/embed/tREkWdVtBZA", type: "ep", num: 59 },
+        { title: "الحلقة 60", url: "https://www.youtube.com/embed/HLXIfpbv9Ko", type: "ep", num: 60 },
+        { title: "الحلقة 61", url: "https://www.youtube.com/embed/6nnZ6ffj2HY", type: "ep", num: 61 },
+        { title: "الحلقة 62", url: "https://www.youtube.com/embed/f8u-MYoNUWo", type: "ep", num: 62 },
+        { title: "الحلقة 63", url: "https://www.youtube.com/embed/8ENQge2QgNg", type: "ep", num: 63 },
+        { title: "الحلقة 64", url: "https://www.youtube.com/embed/3w9_O1IyFLc", type: "ep", num: 64 },
+        { title: "الحلقة 65", url: "https://www.youtube.com/embed/h88vKh8p2ks", type: "ep", num: 65 },
+        { title: "الحلقة 66", url: "https://www.youtube.com/embed/vsk35LIw1R8", type: "ep", num: 66 },
+        { title: "الحلقة 67", url: "https://www.youtube.com/embed/pr3GBH4NChI", type: "ep", num: 67 },
+        { title: "الحلقة 68", url: "https://www.youtube.com/embed/s421S6z8A9E", type: "ep", num: 68 },
+        { title: "الحلقة 69", url: "https://www.youtube.com/embed/KF0guD0o3zI", type: "ep", num: 69 },
+        { title: "الحلقة 70", url: "https://www.youtube.com/embed/vegjncuVXis", type: "ep", num: 70 },
+        { title: "الحلقة 71", url: "https://www.youtube.com/embed/5AHc58UJwa8", type: "ep", num: 71 },
+        { title: "الحلقة 72", url: "https://www.youtube.com/embed/TeHZV3lKYh0", type: "ep", num: 72 },
+        { title: "الحلقة 73", url: "https://www.youtube.com/embed/HMVAJnT1sRA", type: "ep", num: 73 },
+        { title: "الحلقة 74", url: "https://www.youtube.com/embed/deGyxMtaNz0", type: "ep", num: 74 },
+        { title: "الحلقة 75", url: "https://www.youtube.com/embed/uXLTxlPLF8k", type: "ep", num: 75 },
+        { title: "الحلقة 76", url: "https://www.youtube.com/embed/Ewhmxd3bAnc", type: "ep", num: 76 },
+        { title: "الحلقة 77", url: "https://www.youtube.com/embed/ouDcnKKCBhg", type: "ep", num: 77 },
+        { title: "الحلقة 78", url: "https://www.youtube.com/embed/Fxnj-S4Pjxc", type: "ep", num: 78 },
+        { title: "الحلقة 79", url: "https://www.youtube.com/embed/jMVi3zQRd7E", type: "ep", num: 79 },
+        { title: "الحلقة 80", url: "https://www.youtube.com/embed/iRCy7P7KwwI", type: "ep", num: 80 },
+        { title: "الحلقة 81", url: "https://www.youtube.com/embed/8w52zqoOB4A", type: "ep", num: 81 },
+        { title: "الحلقة 82", url: "https://www.youtube.com/embed/bsfNEMnhWEk", type: "ep", num: 82 },
+        { title: "الحلقة 83", url: "https://www.youtube.com/embed/Z77MHMvw3Jo", type: "ep", num: 83 },
+        { title: "الحلقة 84", url: "https://www.youtube.com/embed/erGVAYuY37A", type: "ep", num: 84 },
+        { title: "الحلقة 85", url: "https://www.youtube.com/embed/KGXHjK0OkvI", type: "ep", num: 85 },
+        { title: "الحلقة 86", url: "https://www.youtube.com/embed/kn2py6jwDpo", type: "ep", num: 86 },
+        { title: "الحلقة 87", url: "https://www.youtube.com/embed/cX7XGoBRyNM", type: "ep", num: 87 },
+        { title: "الحلقة 88", url: "https://www.youtube.com/embed/UcHT0l7dPns", type: "ep", num: 88 },
+        { title: "الحلقة 89", url: "https://www.youtube.com/embed/t9JS1xf8Hb8", type: "ep", num: 89 },
+        { title: "الحلقة 90", url: "https://www.youtube.com/embed/bK7ums24sgc", type: "ep", num: 90 },
+        { title: "الحلقة 91", url: "https://www.youtube.com/embed/YSnnK2BEw-A", type: "ep", num: 91 },
+        { title: "الحلقة 92", url: "https://www.youtube.com/embed/_YBSLNZUktg", type: "ep", num: 92 },
+        { title: "الحلقة 93", url: "https://www.youtube.com/embed/-pWwbyOk9q4", type: "ep", num: 93 },
+        { title: "الحلقة 94", url: "https://www.youtube.com/embed/0jxYIdQBozY", type: "ep", num: 94 },
+        { title: "الحلقة 95", url: "https://www.youtube.com/embed/ewTU8dap8GM", type: "ep", num: 95 },
+        { title: "الحلقة 96", url: "https://www.youtube.com/embed/tLoU13nlfOQ", type: "ep", num: 96 },
+        { title: "الحلقة 97", url: "https://www.youtube.com/embed/3_1ogkYpNKY", type: "ep", num: 97 },
+        { title: "الحلقة 98", url: "https://www.youtube.com/embed/V54ggbEoB1Q", type: "ep", num: 98 },
+        { title: "الحلقة 99", url: "https://www.youtube.com/embed/XqukfSQZ6W8", type: "ep", num: 99 },
+        { title: "أغنية النهاية", url: "https://www.youtube.com/embed/PmtDP2PTgkg", type: "intro", num: null }
+    ];
+
+    const grid = document.getElementById('buttonsGrid'); 
+    const player = document.getElementById('videoPlayer'); 
+    const iframe = document.getElementById('mainIframe'); 
+    const titleDisp = document.getElementById('episodeTitle');
+    
     let scrollPosition = 0;
     function lockPage() { scrollPosition = window.scrollY; document.body.style.position = 'fixed'; document.body.style.top = `-${scrollPosition}px`; document.body.style.width = '100%'; }
     function unlockPage() { document.body.style.position = ''; document.body.style.top = ''; document.body.style.width = ''; window.scrollTo(0, scrollPosition); }
-    for(let i=0; i<totalEpisodes; i++){ const btn = document.createElement('button'); btn.className = 'ep-btn'; btn.innerText = i+1; btn.onclick = (function(link, idx){ return function(){ window.open(adLink, '_blank'); lockPage(); player.style.display = 'block'; iframe.src = link; titleDisp.innerText = "أنت تشاهد الآن: عهد الأصدقاء - الحلقة " + (idx+1); document.querySelectorAll('.ep-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); setTimeout(() => { unlockPage(); }, 500); }; })(episodeLinks[i], i); grid.appendChild(btn); }
+
+    episodesData.forEach((item) => { 
+        const btn = document.createElement('button'); 
+        btn.className = 'ep-btn'; 
+        
+        if (item.type === "intro") {
+            btn.classList.add('intro-btn');
+            btn.innerText = "أغنية النهاية";
+        } else {
+            btn.innerText = item.num; 
+        }
+        
+        btn.onclick = function() { 
+            window.open(popupAdLink, '_blank');
+            
+            lockPage(); 
+            player.style.display = 'block'; 
+            iframe.src = item.url; 
+            
+            if (item.type === "intro") {
+                titleDisp.innerText = "مغامرات سنان - أغنية النهاية";
+            } else {
+                titleDisp.innerText = "مغامرات سنان - الحلقة " + item.num; 
+            }
+            
+            document.querySelectorAll('.ep-btn').forEach(b => b.classList.remove('active')); 
+            btn.classList.add('active'); 
+            
+            setTimeout(() => { unlockPage(); }, 500); 
+        }; 
+        grid.appendChild(btn); 
+    });
 </script>
 </body>
 </html>
